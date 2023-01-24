@@ -17,6 +17,7 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->string('cover')->nullable();
+            $table->string('slug');
             $table->decimal('price')->default('0.00');
             $table->text('description')->nullable();
             $table->integer('stock')->default(0);
