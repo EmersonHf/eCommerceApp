@@ -28,20 +28,19 @@
                         <img
                         alt="ecommerce"
                         class="object-cover object-center w-full h-full block"
-                        src="
-                                  @if (str_contains($product->cover, 'public/'))
-                                            {{ Storage::url($product->cover) }}
+                        src="{{Storage::url($product->cover)}}">
+                                 {{-- "@if (str_contains($product->cover, 'products'))
+                                            {{ Storage::url($product->cover),$product->id }}
                                   @else
                                             {{ $product->cover }}
-                                  @endif"
-              >
+                                  @endif"> --}}
                     </td>
                     <td class="px-4 py-3">{{$product->name}}</td>
                     <td class="px-4 py-3">R${{$product->price}}</td>
                     <td class="px-4 py-3">{{$product->stock}}</td>
                     <td class="px-4 py-3 text-sm text-right space-x-3 text-gray-900">
                         <a href="{{route('admin.product.edit',$product->id)}}" class="mt-3 text-indigo-500 inline-flex items-center">Editar</a>
-                        <a class="mt-3 text-indigo-500 inline-flex items-center">Deletar</a>
+                        <a href="{{route('admin.product.destroy',$product->id)}}" class="mt-3 text-indigo-500 inline-flex items-center">Deletar</a>
                     </td>
                 </tr>
                 @endforeach
