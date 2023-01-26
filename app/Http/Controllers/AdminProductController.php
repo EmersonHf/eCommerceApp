@@ -1,5 +1,7 @@
 <?php
 namespace App\Http\Controllers;
+
+use App\Http\Requests\ProductsStoreRequest;
 use Illuminate\Support\Str;
 use App\Models\Product;
 use Illuminate\Http\Request;
@@ -26,15 +28,9 @@ class AdminProductController extends Controller
     }
 
 //cria o produto
-    public function store(Request $request)
+    public function store(ProductsStoreRequest $request)
     {
-    $input = $request->validate([
-          'name'=>'string|required',
-          'price'=>'string|required',
-          'stock'=>'integer|nullable',
-          'cover'=>'file|nullable',
-          'description'=> 'string|nullable'
-      ]);
+    $input = $request->validated();
 
      $input['slug'] = Str::slug($input['name']);
       if(!empty($input['cover']) && $input['cover']->isValid()){
@@ -62,15 +58,9 @@ class AdminProductController extends Controller
   }
 
   // Recebe requisição para dar update
-  public function update(Product $product, Request $request)
+  public function update(Product $product, ProductsStoreRequest $request)
   {
-    $input = $request->validate([
-        'name'=>'string|required',
-        'price'=>'string|required',
-        'stock'=>'integer|nullable',
-        'cover'=>'file|nullable',
-        'description'=> 'string|nullable'
-    ]);
+    $input = $request->validated();
     if(!empty($input['cover']) && $input['cover']->isValid()){
         Storage::delete($product->cover ?? '');
         $file = $input['cover'];
@@ -86,7 +76,7 @@ class AdminProductController extends Controller
 
     public function destroy(Product $product){
     $product ->delete();
-
+    Storage::delete($product->cover ?? '');
     return Redirect::route('admin.products');
     }
 
@@ -94,7 +84,9 @@ public function destroyImage(Product $product){
 
 
     Storage::delete($product->cover);
+
     $product->cover = null;
+    Storage::delete($product->cover ?? '');
 
     $product->save();
 
