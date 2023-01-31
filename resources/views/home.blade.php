@@ -38,7 +38,7 @@
             </div>
             @empty
             <div class="lg:w-1/4 md:w-1/2 p-4 w-full">
-            <h1 >Nenhum produto encontrado</h1>
+            <h1 >no products on the table</h1>
             </div>
 
             @endforelse ($products as $product)
