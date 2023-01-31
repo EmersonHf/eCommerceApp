@@ -20,7 +20,7 @@
                 </tr>
                 </thead>
                 <tbody class="divide-y">
-                    @foreach ($products as $product)
+                    @forelse ($products as $product)
 
                 <tr @if($loop->even)  class="bg-gray-100" @endif>
                     <td class="px-4 py-3">{{$product->id}}</td>
@@ -43,7 +43,14 @@
                         <a href="{{route('admin.product.destroy',$product->id)}}" class="mt-3 text-indigo-500 inline-flex items-center">Deletar</a>
                     </td>
                 </tr>
-                @endforeach
+                @empty
+            <tr>
+
+                <td class="px-4 py-3 text-sm text-right space-x-3 text-gray-900">
+                <h1>no products on the table</h1>
+                </td>
+
+                @endforelse
                 </tbody>
             </table>
         </div>
